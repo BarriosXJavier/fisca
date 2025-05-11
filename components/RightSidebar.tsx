@@ -3,6 +3,10 @@ import Link from "next/link";
 import BankCard from "./BankCard";
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
+	if (!user) {
+		return null;
+	}
+
 	return (
 		<aside className="right-sidebar">
 			<section className="flex flex-col pb-8">
@@ -10,7 +14,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
 				<div className="profile">
 					<div className="profile-img">
 						<span className="text-5xl font-bold text-blue-500">
-							{user.name[0]}
+							{user.name}
 						</span>
 					</div>
 				</div>
@@ -23,7 +27,7 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
 				<div className="flex w-full justify-between">
 					<h2 className="header-2">My banks</h2>
 					<Link href="/" className="flex gap-2">
-						<Image src="/icons/plus.svg" width={20} height={20} alt="plus" />{" "}
+						<Image src="/icons/plus.svg" width={20} height={20} alt="plus" />
 						<h2 className="text-14 font-semibold font-gray-600">Add Bank</h2>
 					</Link>
 				</div>

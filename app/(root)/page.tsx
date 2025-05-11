@@ -2,7 +2,7 @@ import HeaderBox from "@/components/HeaderBox";
 import RightSidebar from "@/components/RightSidebar";
 import TotalBalanceBox from "@/components/TotalBalanceBox";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
-import React from "react";
+import { redirect } from "next/navigation";
 
 const Home = async () => {
 	const loggedIn = await getLoggedInUser();

@@ -23,6 +23,7 @@ import { Loader2 } from "lucide-react";
 import SignUp from "@/app/(auth)/sign-up/page";
 import { useRouter } from "next/navigation";
 import { signUp, signIn, getLoggedInUser } from "@/lib/actions/user.actions";
+import PlaidLink from "./PlaidLink";
 
 const formSchema = z.object({
 	email: z.string().email(),
@@ -47,8 +48,22 @@ const AuthForm = ({ type }: { type: string }) => {
 		setIsLoading(true);
 		try {
 			// Sign Up with Appwrite
+
 			if (type === "sign-up") {
-				const newUser = await signUp(data);
+				const userData = {
+					firstName: data.firstName!,
+					lastName: data.lastName!,
+					address1: data.address1!,
+					city: data.city!,
+					state: data.state!,
+					postalCode: data.postalCode!,
+					dateOfBirth: data.dateOfBirth!,
+					ssn: data.socialSecurityNumber!,
+					email: data.email,
+					password: data.password,
+				};
+
+				const newUser = await signUp(userData);
 				setUser(newUser);
 			}
 			if (type === "sign-in") {
@@ -93,7 +108,9 @@ const AuthForm = ({ type }: { type: string }) => {
 				</div>
 			</header>
 			{user ? (
-				<div className="flex flex-col gap-4">{/*PLAID LINK*/}</div>
+				<div className="flex flex-col gap-4">
+					<PlaidLink user={user} variant="primary" />
+				</div>
 			) : (
 				<>
 					<Form {...form}>
@@ -196,13 +213,6 @@ const AuthForm = ({ type }: { type: string }) => {
 									</div>
 								)}
 							/>
-
-							{/*<CustomInput
-								control={form.control}
-								name={type === "password" ? "password" : "email"}
-								label="username"
-								placeholder="Enter your usename"
-							/>*/}
 
 							<div className="flex flex-col gap-4">
 								<Button type="submit" className="form-btn" disabled={isLoading}>
